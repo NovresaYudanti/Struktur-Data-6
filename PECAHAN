@@ -1,0 +1,104 @@
+// NOVRESA DWI YUDANTI - 18360009- Struktur Data
+package pecahan1;
+
+public class Pecahan1 {
+    int bulat,pembilang,penyebut;
+    
+    Pecahan1(){
+        bulat=0; pembilang=0; penyebut=1;
+    }
+    Pecahan1(int x){
+        bulat=x; pembilang=0; penyebut=1;  
+    }
+    Pecahan1(int x, int y){
+        bulat=0; pembilang=x; penyebut=y;
+    }
+    Pecahan1(int x, int y, int z){
+        bulat=x; pembilang=y; penyebut=z;
+    }
+    int gcd (int x, int y){
+        if(y==0)return(x);
+        else return (gcd(y,x%y));
+    }
+    
+    void reduksi(){
+        int temp=gcd(pembilang,penyebut);
+        pembilang=pembilang/temp; penyebut=penyebut/temp;
+        if(pembilang>=penyebut){
+            bulat=pembilang/penyebut;
+            pembilang=pembilang%penyebut;
+        }
+        else bulat=0;
+    }
+    
+    Pecahan1 tambah(Pecahan1 X){
+        Pecahan1 T = new Pecahan1();
+        T.bulat=0;
+        T.pembilang=(bulat*penyebut+pembilang)*X.penyebut + penyebut*(X.bulat*X.penyebut+X.pembilang);
+        T.penyebut=penyebut*X.penyebut;
+        T.reduksi();
+        return T;
+    }
+    
+    Pecahan1 kurang(Pecahan1 X){
+        Pecahan1 T = new Pecahan1();
+        T.bulat=0;
+        T.pembilang=(bulat*penyebut+pembilang)*X.penyebut-penyebut*(X.bulat*X.penyebut+X.pembilang);
+        T.penyebut=penyebut*X.penyebut;
+        T.reduksi();
+        return T;
+    }
+    
+    Pecahan1 kali(Pecahan1 X){
+        Pecahan1 T = new Pecahan1();
+        T.bulat=0;
+        T.pembilang=(bulat*penyebut+pembilang)*(X.bulat*X.penyebut+X.pembilang);
+        T.penyebut=penyebut*X.penyebut;
+        T.reduksi ();
+        return T;
+    }
+    
+    Pecahan1 bagi(Pecahan1 X){
+        Pecahan1 T = new Pecahan1();
+        T.bulat=0;
+        T.pembilang=(bulat*penyebut+pembilang)*(X.bulat*X.penyebut+X.pembilang);
+        T.penyebut=penyebut*X.penyebut;
+        T.reduksi ();
+        return T;
+    }
+    
+    String toStr(){
+        String T=" ";
+        if(penyebut==1)
+            if(pembilang==0)
+                T=T+bulat;
+            else{
+                T=T+(bulat+pembilang);
+                pembilang=0;
+            }
+        else if(bulat==0)
+            T=T+pembilang+"/"+penyebut;
+        else
+            T=T+bulat+" "+pembilang+"/"+penyebut;
+        return(T);
+    }
+    
+     public static void main(String[] args) {
+         Pecahan1 X=new Pecahan1(29,11,1);
+         Pecahan1 Y=new Pecahan1(14,10);
+         Pecahan1 Z=new Pecahan1();
+         
+         System.out.println("X = "+X.toStr()+"\n"+"Y = "+Y.toStr()+"\n");
+         Z=X.tambah(Y);
+         System.out.println("X + Y = "+Z.toStr());
+         Z=X.kurang(Y);
+         System.out.println("X - Y = "+Z.toStr());
+         Z=X.kali(Y);
+         System.out.println("X * Y = "+Z.toStr());
+         Z=X.bagi(Y);
+         System.out.println("X / Y = "+Z.toStr());
+         
+        
+    }
+    
+}
